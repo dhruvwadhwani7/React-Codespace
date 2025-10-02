@@ -1,13 +1,34 @@
-
+import { useState } from 'react'
 import './App.css'
 
 function App() {
 
-  let counter = 5
+  let [counter , setCounter] = useState(15)
+
+  // let counter = 5
 
   const addValue=()=>{
-    console.log('clicked for increase',counter)
-    counter ++  
+    //counter ++  
+    // console.log('clicked for increase',counter)
+    
+    if(counter === 20){
+      alert('You cannot exceed more')
+      return
+    }
+      setCounter(counter + 1)
+    
+  }
+
+  const removeValue=()=>{
+    if(counter === 0){
+      alert('Cannot decrement more')
+      return
+    }
+    setCounter(counter-1)
+  }
+
+  const resetValue = () => {
+    setCounter(15)
   }
   
   return (
@@ -17,7 +38,8 @@ function App() {
 
       <button onClick={addValue}>Add Value</button>
       <br/>
-      <button>Remove Value</button>
+      <button onClick={removeValue}>Remove Value</button>
+      <button onClick={resetValue}>Reset Button</button>
       <p>Footer : {counter}</p>
     </>
   )
