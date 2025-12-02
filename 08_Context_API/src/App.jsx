@@ -8,7 +8,7 @@ function App() {
 
   return (
     <UserContextProvider>
-      <h1 className='text-2xl bg-amber-500'>HELLO Dhruv</h1>
+      <h1 className='text-2xl bg-amber-500'>HELLO Dhruv Wadhwani</h1>
       <Login/>
       <Profile/>
     </UserContextProvider>
