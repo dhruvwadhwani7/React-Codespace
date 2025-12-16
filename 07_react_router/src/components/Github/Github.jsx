@@ -2,9 +2,10 @@ import React from 'react'
 import useGitStats from '../../hooks/useGitStats'
 import { useState } from 'react';
 import { Input } from 'react'
+import useGitStatsMore from '../../hooks/useGitStatsMore';
 function Github() {
     const [user,setUser] = useState("")
-    const stats = useGitStats(user)
+    const stats = useGitStatsMore(user)
 
   return (
     

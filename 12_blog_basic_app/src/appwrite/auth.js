@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import config from "../config/config";
 import { Client, Account, ID } from "appwrite";
 
@@ -10,62 +11,59 @@ export class AuthService {
       .setEndpoint(config.appwriteUrl)
       .setProject(config.appwriteProjectId);
 
-      this.account = new Account(this.client)
+    this.account = new Account(this.client);
   }
 
-  async createAccount({email,password,name}){
-
-    // eslint-disable-next-line no-useless-catch
+  async createAccount({ email, password, name }) {
     try {
-        const userAccount = await this.account.create(ID.unique(), email,password,name);
+      const userAccount = await this.account.create(
+        ID.unique(),
+        email,
+        password,
+        name
+      );
 
-        if(userAccount){
-            // return userAccount
-            //call another method
-            return this.login({email,password})
-        }
-        else {
-            return userAccount
-        }
-    } 
-    catch (error) {
-        throw error
-    }
-  }
+      if (userAccount) {
+        return await this.login({ email, password });
+      }
 
-
-  async login({email,password}){
-    // eslint-disable-next-line no-useless-catch
-    try {
-        await this.account.createEmailPasswordSession(email,password)
+      return null;
     } catch (error) {
-        throw error;
+      throw error;
     }
   }
 
-  async getCurrentUser(){
-    // eslint-disable-next-line no-useless-catch
+  async login({ email, password }) {
     try {
-        await this.account.get()
-    } catch (error) {
-        throw error
-    }
+      // If already logged in, return user
+      const currentUser = await this.getCurrentUser();
+      if (currentUser) return currentUser;
 
-    return null //supoose a error and nothing rertuned i. the try catch or just try      
+      // Otherwise create session
+      await this.account.createEmailPasswordSession(email, password);
+      return await this.account.get();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getCurrentUser() {
+    try {
+      return await this.account.get();
+    } catch {
+      // 401 = not logged in (NORMAL)
+      return null;
+    }
   }
 
   async logout() {
-    // eslint-disable-next-line no-useless-catch
     try {
-        await this.account.deleteSessions()
+      await this.account.deleteSessions();
     } catch (error) {
-        throw error
+      throw error;
     }
   }
-
 }
 
-
 const authService = new AuthService();
-
 export default authService;

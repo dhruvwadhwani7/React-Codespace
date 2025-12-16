@@ -16,6 +16,7 @@ function App() {
       </h1>
       {/* <Card channel="dhruvWadh" myArr=[1,2,3,4] /> */}
       {/* <Card channel="dhruvWadh" myArr={"first":"Dhruv"} /> */}
+      {/* <Card channel="hello" myArr/> */}
       <div className="flex m-30 gap-30">
       <Card channel="dhruv" someArr={myArr} someObj={myObj} srcNo={480} />
       <Card username="dhruv Wadhwani" btnText="click to visit me"srcNo={310}/>

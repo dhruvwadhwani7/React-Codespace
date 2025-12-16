@@ -7,8 +7,7 @@ function useGitStats(username){
         if(!username) return;
         fetch(`https://api.github.com/users/${username}`)
         .then(res=>res.json())
-        .then((res)=>seData(res))
-        console.log(data)
+        .then((data)=>seData(data))
     },[username])
     console.log(data)
     return data;
